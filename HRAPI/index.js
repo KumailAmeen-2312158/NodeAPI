@@ -356,6 +356,24 @@ app.get('/q73', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+app.get('/assign1', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+    (SELECT COUNT(*) FROM employees) AS emp_count,
+    (SELECT COUNT(*) FROM departments) AS dep_count,
+    (SELECT COUNT(*) FROM locations) AS loc_count,
+    (SELECT COUNT(*) FROM countries) AS con_count,
+    (SELECT COUNT(*) FROM regions) AS reg_count,
+    (SELECT COUNT(*) FROM jobs) AS job_count,
+    (SELECT COUNT(*) FROM job_history) AS count_jobhistory;
+
+        `);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 app.get('/q74', async (req, res) => {
     try {
         const result = await pool.query(`
